@@ -1,6 +1,9 @@
-matplotlib==3.7.0
+matplotlib
 pandas
 numpy
 sphinx
 sphinx-rtd-theme
-torch 
+torch
+torchvision 
+scikit-learn
+tqdm
