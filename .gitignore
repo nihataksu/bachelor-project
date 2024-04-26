@@ -15,3 +15,5 @@
 # Python files
 *.pyc
 *__pycache__/
+
+*.csv
