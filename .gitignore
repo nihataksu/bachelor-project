@@ -16,4 +16,9 @@
 *.pyc
 *__pycache__/
 
+
 *.csv
+
+experiment_results/
+src/data/
+

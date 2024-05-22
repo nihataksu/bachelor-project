@@ -1,0 +1,1 @@
+print("Bizim init")
