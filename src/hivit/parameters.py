@@ -5,7 +5,7 @@ class Parameters:
     def __init__(self):
         self.RANDOM_SEED = 42
         self.BATCH_SIZE = 512
-        self.EPOCHS = 1
+        self.EPOCHS = 2
         self.PATIENCE = 20
         self.LEARNING_RATE = 1e-3
         self.NUM_CLASSES = 10
