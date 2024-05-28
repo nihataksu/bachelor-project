@@ -185,5 +185,11 @@ def training_loop(
 
     if not NO_PLT_SHOW:
         plt.show()
+    else:
+        plt.close(fig)
+
+    model.load_state_dict(
+        torch.load(os.path.join(working_folder, checkpoint_file_name))
+    )
 
     return model

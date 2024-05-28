@@ -3,6 +3,7 @@ from torch import nn
 from tqdm import tqdm
 from hivit.utils import AppendLogger
 import os
+import json
 
 
 def test_model(
@@ -41,3 +42,10 @@ def test_model(
 
     logger.print(f"Test Loss: {test_loss:.4f}")
     logger.print(f"Test Accuracy: {test_accuracy:.4f}")
+
+    results_dict = {"test_loss": test_loss, "test_accuracy": test_accuracy}
+
+    json_file = os.path.join(working_folder, f"{training_name}_result.json")
+
+    with open(json_file, "w") as file:
+        json.dump(results_dict, file, indent=4)
