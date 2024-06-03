@@ -4,6 +4,7 @@ from tqdm import tqdm
 from hivit.utils import AppendLogger
 import os
 import json
+from hivit.telegram import notify_telegram_group
 
 
 def test_model(
@@ -49,3 +50,5 @@ def test_model(
 
     with open(json_file, "w") as file:
         json.dump(results_dict, file, indent=4)
+    notify_telegram_group(f"TEST MODEL: {training_name}")
+    notify_telegram_group(json.dumps(results_dict, indent=4))
