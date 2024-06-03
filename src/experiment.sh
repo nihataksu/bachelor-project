@@ -35,9 +35,9 @@ export DATASET_NAME="cifar10"
 
 RANDOM_SEEDS=("32")
 PATCH_SIZES=("4")
-BATCH_SIZES=("128","256","512")
-HIDDEN_DIMS=("512", "768", "1024")
-NUM_ENCODERSS=("6", "8")
+BATCH_SIZES=("128" "256" "512")
+HIDDEN_DIMS=("512" "768" "1024")
+NUM_ENCODERSS=("6" "8")
 
 for param1 in "${RANDOM_SEEDS[@]}"; do
     for param2 in "${HIDDEN_DIMS[@]}"; do
@@ -47,9 +47,9 @@ for param1 in "${RANDOM_SEEDS[@]}"; do
                     export RANDOM_SEED=$param1
                     export HIDDEN_DIM=$param2
                     export PATCH_SIZE=$param3
-                    export NUM_ENCODERSS=$param4
+                    export NUM_ENCODERS=$param4
                     export BATCH_SIZE=$param5
-
+                    echo param5 $param5
                     python experiment.py
                 done
             done 
