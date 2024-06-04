@@ -36,8 +36,8 @@ export DATASET_NAME="cifar10"
 RANDOM_SEEDS=("32")
 PATCH_SIZES=("4")
 BATCH_SIZES=("128" "256" "512")
-HIDDEN_DIMS=("512" "768" "1024")
-NUM_ENCODERSS=("6" "8")
+HIDDEN_DIMS=("768" "1024")
+NUM_ENCODERSS=("6")
 
 for param1 in "${RANDOM_SEEDS[@]}"; do
     for param2 in "${HIDDEN_DIMS[@]}"; do
