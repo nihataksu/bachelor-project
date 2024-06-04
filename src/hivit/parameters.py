@@ -38,6 +38,7 @@ class Parameters:
         self.EXECUTE_MODEL_NOEMBEDING = "True"
 
     def load_from_env(self):
+        self.NO_PLT_SHOW = os.getenv("NO_PLT_SHOW", self.NO_PLT_SHOW)
         self.RANDOM_SEED = int(os.getenv("RANDOM_SEED", self.RANDOM_SEED))
         self.BATCH_SIZE = int(os.getenv("BATCH_SIZE", self.BATCH_SIZE))
         self.EPOCHS = int(os.getenv("EPOCHS", self.EPOCHS))
