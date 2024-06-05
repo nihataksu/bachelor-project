@@ -9,6 +9,12 @@ from tqdm import tqdm
 import os
 from hivit.utils import AppendLogger
 from torch.optim.lr_scheduler import CosineAnnealingLR
+from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
+
+
+def get_current_lr(optimizer):
+    for param_group in optimizer.param_groups:
+        return param_group["lr"]
 
 
 def training_loop(
@@ -22,6 +28,7 @@ def training_loop(
     EPOCHS,
     PATIENCE,
     LEARNING_RATE,
+    LEARNING_RATE_SCHEDULER_NAME,
     NUM_CLASSES,
     PATCH_SIZE,
     IMAGE_SIZE,
@@ -61,7 +68,11 @@ def training_loop(
         weight_decay=ADAM_WEIGHT_DECAY,
     )
 
-    scheduler = CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
+    match LEARNING_RATE_SCHEDULER_NAME:
+        case "CosineAnnealingLR":
+            scheduler = CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
+        case "CosineAnnealingWarmRestarts":
+            scheduler = CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2)
 
     best_val_loss = float("inf")
     epochs_no_improve = 0
@@ -159,7 +170,14 @@ def training_loop(
         logger.print(f"Valid Accuracy EPOCH {epoch + 1}: {val_accuracies[-1]:.4f}")
         logger.print("-" * 30)
 
-        scheduler.step()
+        match LEARNING_RATE_SCHEDULER_NAME:
+            case "CosineAnnealingLR":
+                scheduler.step()
+            case "CosineAnnealingWarmRestarts":
+                scheduler.step()
+
+        current_lr = get_current_lr(optimizer)
+        logger.print(f"Epoch {epoch+1}: Current Learning Rate: {current_lr}")
 
     if not early_stop:
         logger.print("Completed all epochs without early stopping.")

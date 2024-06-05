@@ -13,6 +13,7 @@ class Parameters:
         self.EPOCHS = 2
         self.PATIENCE = 20
         self.LEARNING_RATE = 1e-3
+        self.LEARNING_RATE_SCHEDULER_NAME = ""
         self.NUM_CLASSES = 10
         self.PATCH_SIZE = 4
         self.IMAGE_SIZE = 32
@@ -44,6 +45,9 @@ class Parameters:
         self.EPOCHS = int(os.getenv("EPOCHS", self.EPOCHS))
         self.PATIENCE = int(os.getenv("PATIENCE", self.PATIENCE))
         self.LEARNING_RATE = float(os.getenv("LEARNING_RATE", self.LEARNING_RATE))
+        self.LEARNING_RATE_SCHEDULER_NAME = os.getenv(
+            "LEARNING_RATE_SCHEDULER_NAME", self.LEARNING_RATE_SCHEDULER_NAME
+        )
         self.NUM_CLASSES = int(os.getenv("NUM_CLASSES", self.NUM_CLASSES))
         self.PATCH_SIZE = int(os.getenv("PATCH_SIZE", self.PATCH_SIZE))
         self.IMAGE_SIZE = int(os.getenv("IMAGE_SIZE", self.IMAGE_SIZE))
