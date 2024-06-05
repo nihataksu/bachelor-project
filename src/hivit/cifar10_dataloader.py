@@ -1,6 +1,7 @@
 from torchvision import transforms, datasets
 from hivit.cut_out import Cutout
 from torch.utils.data import DataLoader, random_split
+from torchvision.transforms.v2 import GaussianNoise
 
 
 def cifar10_dataloader(DATASET_ROOT, BATCH_SIZE):
@@ -14,8 +15,12 @@ def cifar10_dataloader(DATASET_ROOT, BATCH_SIZE):
                 brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2
             ),
             transforms.ToTensor(),
+            GaussianNoise(mean=0.0, sigma=0.1, clip=True),
             Cutout(n_holes=1, length=8),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+            transforms.RandomErasing(
+                p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value="random"
+            ),
         ]
     )
 
@@ -23,9 +28,7 @@ def cifar10_dataloader(DATASET_ROOT, BATCH_SIZE):
         [
             transforms.Resize((32, 32)),  # Ensure the image size is 32x32
             transforms.ToTensor(),
-            transforms.Normalize(
-                mean=[0.5071, 0.4867, 0.4408], std=[0.2675, 0.2565, 0.2761]
-            ),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
 

@@ -8,6 +8,7 @@ import timeit
 from tqdm import tqdm
 import os
 from hivit.utils import AppendLogger
+from torch.optim.lr_scheduler import CosineAnnealingLR
 
 
 def training_loop(
@@ -59,6 +60,8 @@ def training_loop(
         lr=LEARNING_RATE,
         weight_decay=ADAM_WEIGHT_DECAY,
     )
+
+    scheduler = CosineAnnealingLR(optimizer, T_max=EPOCHS, eta_min=1e-6)
 
     best_val_loss = float("inf")
     epochs_no_improve = 0
@@ -155,6 +158,8 @@ def training_loop(
         logger.print(f"Train Accuracy EPOCH {epoch + 1}: {train_accuracies[-1]:.4f}")
         logger.print(f"Valid Accuracy EPOCH {epoch + 1}: {val_accuracies[-1]:.4f}")
         logger.print("-" * 30)
+
+        scheduler.step()
 
     if not early_stop:
         logger.print("Completed all epochs without early stopping.")
