@@ -5,6 +5,7 @@ from hivit.utils import AppendLogger
 import os
 import json
 from hivit.telegram import notify_telegram_group
+from sklearn.metrics import precision_score, recall_score, f1_score
 
 
 def test_model(
@@ -41,10 +42,23 @@ def test_model(
         test_labels
     )
 
+    test_precision = precision_score(test_labels, test_preds, average="weighted")
+    test_recall = recall_score(test_labels, test_preds, average="weighted")
+    test_f1 = f1_score(test_labels, test_preds, average="weighted")
+
     logger.print(f"Test Loss: {test_loss:.4f}")
     logger.print(f"Test Accuracy: {test_accuracy:.4f}")
+    logger.print(f"Test Precision: {test_precision:.4f}")
+    logger.print(f"Test Recall: {test_recall:.4f}")
+    logger.print(f"Test F1 Score: {test_f1:.4f}")
 
-    results_dict = {"test_loss": test_loss, "test_accuracy": test_accuracy}
+    results_dict = {
+        "test_loss": test_loss,
+        "test_accuracy": test_accuracy,
+        "test_precision": test_precision,
+        "test_recall": test_recall,
+        "test_f1": test_f1,
+    }
 
     json_file = os.path.join(working_folder, f"{training_name}_result.json")
 

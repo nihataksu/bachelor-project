@@ -8,6 +8,7 @@ from hivit.telegram import notify_telegram_group
 from hivit.telegram import send_photo_telegram_group
 from datetime import datetime
 from hivit.cifar10_dataloader import cifar10_dataloader
+from hivit.cifar100_dataloader import cifar100_dataloader
 import torch
 import os
 import sys
@@ -43,6 +44,11 @@ match parameters.DATASET_NAME:
     case "cifar10":
         # Get the data loaders for train validation and test
         train_dataloader, val_dataloader, test_dataloader = cifar10_dataloader(
+            parameters.DATASET_ROOT, parameters.BATCH_SIZE
+        )
+    case "cifar100":
+        # Get the data loaders for train validation and test
+        train_dataloader, val_dataloader, test_dataloader = cifar100_dataloader(
             parameters.DATASET_ROOT, parameters.BATCH_SIZE
         )
     case _:
