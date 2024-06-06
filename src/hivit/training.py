@@ -10,11 +10,13 @@ import os
 from hivit.utils import AppendLogger
 from torch.optim.lr_scheduler import CosineAnnealingLR
 from torch.optim.lr_scheduler import CosineAnnealingWarmRestarts
-
+from hivit.telegram import format_table_as_markdown
+from hivit.telegram import update_notify_telegram_group
 
 def get_current_lr(optimizer):
     for param_group in optimizer.param_groups:
         return param_group["lr"]
+
 
 
 def training_loop(
@@ -74,6 +76,7 @@ def training_loop(
         case "CosineAnnealingWarmRestarts":
             scheduler = CosineAnnealingWarmRestarts(optimizer, T_0=10, T_mult=2)
 
+    telegram_epoc_message_id=0
     best_val_loss = float("inf")
     epochs_no_improve = 0
     early_stop = False
@@ -178,6 +181,21 @@ def training_loop(
 
         current_lr = get_current_lr(optimizer)
         logger.print(f"Epoch {epoch+1}: Current Learning Rate: {current_lr}")
+        
+        
+        headers = ["Prop","Value"]
+        rows = [["Epoc", f"{epoch + 1}"],
+        ["Learning Rate", f"{current_lr}"],
+        ["Train Loss", f"{train_loss:.4f}"],
+        ["Valid Loss", f"{val_loss:.4f}"],
+        ["Train Accuracy", f"{train_accuracies[-1]:.4f}"],
+        ["Valid Accuracy", f"{val_accuracies[-1]:.4f}"]
+        ]
+
+        table = format_table_as_markdown(headers,rows)
+        message = f"Epoc Result:\n\n{table}"
+        telegram_epoc_message_id=update_notify_telegram_group(telegram_epoc_message_id,message)
+
 
     if not early_stop:
         logger.print("Completed all epochs without early stopping.")

@@ -37,6 +37,12 @@ class Parameters:
         self.EXECUTE_MODEL_LEARNING = "True"
         self.EXECUTE_MODEL_HILBERT = "True"
         self.EXECUTE_MODEL_NOEMBEDING = "True"
+        self.MODEL_LEARNING_RESULT_LOSS=None
+        self.MODEL_LEARNING_RESULT_ACCURACY=None
+        self.MODEL_HILBERT_RESULT_LOSS=None
+        self.MODEL_HILBERT_RESULT_ACCURACY=None
+        self.MODEL_NOEMBEDING_RESULT_LOSS=None
+        self.MODEL_NOEMBEDING_RESULT_ACCURACY=None
 
     def load_from_env(self):
         self.NO_PLT_SHOW = os.getenv("NO_PLT_SHOW", self.NO_PLT_SHOW)
