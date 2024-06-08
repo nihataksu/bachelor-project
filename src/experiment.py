@@ -5,6 +5,9 @@ from hivit.learned_positional_embedding import PatchEmbeddingLearnedPositionalEm
 from hivit.resnet_learned_embedding import (
     PatchEmbeddingResnetLearnedPositionalEmbedding,
 )
+from hivit.resnet_hilbert_embedding import (
+    PatchEmbeddingResnetHilbertPositionalEmbedding,
+)
 from hivit.training import training_loop
 from hivit.test_model import test_model
 from hivit.telegram import notify_telegram_group
@@ -310,4 +313,63 @@ if parameters.EXECUTE_MODEL_RESNET_EMBEDING == "True":
     send_photo_telegram_group(
         os.path.join(working_folder, "resnet_18_embedding_training.png"),
         "resnet_18_embedding_training",
+    )
+
+
+if parameters.EXECUTE_MODEL_RESNET_HILBERT_EMBEDING == "True":
+    # Instantiate resnet-18 positional emmbedding strategy
+    print("Instantiate resnet-50 hilbert positional emmbedding strategy")
+    no_postional_embedding = PatchEmbeddingResnetHilbertPositionalEmbedding(
+        parameters.EMBEDING_DIMENTION,
+        parameters.PATCH_SIZE,
+        parameters.NUM_PATCHES,
+        parameters.DROPOUT,
+        parameters.IN_CHANNELS,
+        parameters.IMAGE_SIZE,
+    )
+
+    # Train the model with no positional emmbedding
+    print("Train the model with resnet-50 hilbert positional emmbedding")
+    model_no_embedding = training_loop(
+        working_folder=working_folder,
+        training_name="resnet_50_hilbert_embedding_training",
+        embedding_strategy=no_postional_embedding,
+        checkpoint_file_name="resnet_50_hilbert_embedding_training.pt",
+        device=device,
+        train_dataloader=train_dataloader,
+        val_dataloader=val_dataloader,
+        EPOCHS=parameters.EPOCHS,
+        PATIENCE=parameters.PATIENCE,
+        LEARNING_RATE=parameters.LEARNING_RATE,
+        LEARNING_RATE_SCHEDULER_NAME=parameters.LEARNING_RATE_SCHEDULER_NAME,
+        NUM_CLASSES=parameters.NUM_CLASSES,
+        PATCH_SIZE=parameters.PATCH_SIZE,
+        IMAGE_SIZE=parameters.IMAGE_SIZE,
+        IN_CHANNELS=parameters.IN_CHANNELS,
+        NUM_HEADS=parameters.NUM_HEADS,
+        DROPOUT=parameters.DROPOUT,
+        HIDDEN_DIM=parameters.HIDDEN_DIM,
+        ADAM_WEIGHT_DECAY=parameters.ADAM_WEIGHT_DECAY,
+        ADAM_BETAS=parameters.ADAM_BETAS,
+        ACTIVATION=parameters.ACTIVATION,
+        NUM_ENCODERS=parameters.NUM_ENCODERS,
+        EMBEDING_DIMENTION=parameters.EMBEDING_DIMENTION,
+        NUM_PATCHES=parameters.NUM_PATCHES,
+        NO_PLT_SHOW=NO_PLT_SHOW,
+    )
+
+    # Test model with no positional emmbedding
+    print("Test model with resnet-50 hilbert emmbedding")
+    test_model(
+        working_folder=working_folder,
+        training_name="resnet_50_hilbert_embedding_test",
+        model=model_no_embedding,
+        checkpoint_path="resnet_50_hilbert_embedding_training.pt",
+        device=device,
+        test_dataloader=test_dataloader,
+    )
+
+    send_photo_telegram_group(
+        os.path.join(working_folder, "resnet_50_hilbert_embedding_training.png"),
+        "resnet_50_hilbert_embedding_training",
     )

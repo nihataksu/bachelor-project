@@ -38,6 +38,7 @@ class Parameters:
         self.EXECUTE_MODEL_HILBERT = "True"
         self.EXECUTE_MODEL_NOEMBEDING = "True"
         self.EXECUTE_MODEL_RESNET_EMBEDING = "True"
+        self.EXECUTE_MODEL_RESNET_HILBERT_EMBEDING = "True"
         self.MODEL_LEARNING_RESULT_LOSS = None
         self.MODEL_LEARNING_RESULT_ACCURACY = None
         self.MODEL_HILBERT_RESULT_LOSS = None
@@ -71,6 +72,16 @@ class Parameters:
         )
         self.EXECUTE_MODEL_NOEMBEDING = os.getenv(
             "EXECUTE_MODEL_NOEMBEDING", self.EXECUTE_MODEL_NOEMBEDING
+        )
+
+        self.EXECUTE_MODEL_RESNET_EMBEDING = os.getenv(
+            "EXECUTE_MODEL_RESNET_EMBEDING",
+            self.EXECUTE_MODEL_RESNET_EMBEDING,
+        )
+
+        self.EXECUTE_MODEL_RESNET_HILBERT_EMBEDING = os.getenv(
+            "EXECUTE_MODEL_RESNET_HILBERT_EMBEDING",
+            self.EXECUTE_MODEL_RESNET_HILBERT_EMBEDING,
         )
 
         self.ADAM_WEIGHT_DECAY = float(
