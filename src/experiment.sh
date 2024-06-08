@@ -32,7 +32,7 @@ export TRAINER_BOT_TOKEN="7453991407:AAHxY8z6n8N4r84e_fYK9XQIhmLfbplNTck"
 export TRAINER_BOT_CHAT_ID="-4236180801"
 
 export EPOCHS=200
-export DATASET_NAME="cifar10_no_augmnet"
+export DATASET_NAME="cifar10_no_augment"
 
 
 RANDOM_SEEDS=("32")
