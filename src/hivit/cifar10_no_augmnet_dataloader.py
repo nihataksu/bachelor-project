@@ -1,39 +1,31 @@
 from torchvision import transforms, datasets
-from hivit.cut_out import Cutout
 from torch.utils.data import DataLoader, random_split
 
 
-def mnist_dataloader(DATASET_ROOT, BATCH_SIZE):
+def cifar10_no_augmnet_dataloader(DATASET_ROOT, BATCH_SIZE):
     transform_train = transforms.Compose(
         [
-            transforms.RandomRotation(15),
-            transforms.ColorJitter(
-                brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2
-            ),
+            transforms.Resize((32, 32)),
             transforms.ToTensor(),
-            Cutout(n_holes=1, length=6),
-            transforms.Normalize(mean=[0.1307], std=[0.3081]),
-            transforms.RandomErasing(
-                p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value="random"
-            ),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
 
     transform_val_test = transforms.Compose(
         [
-            transforms.Resize((28, 28)),  # Ensure the image size is 28x28
+            transforms.Resize((32, 32)),  # Ensure the image size is 32x32
             transforms.ToTensor(),
-            transforms.Normalize(mean=[0.1307], std=[0.3081]),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
     )
 
-    train_dataset = datasets.MNIST(
+    train_dataset = datasets.CIFAR10(
         root=DATASET_ROOT,
         train=True,
         download=True,
         transform=transform_train,
     )
-    test_dataset = datasets.MNIST(
+    test_dataset = datasets.CIFAR10(
         root=DATASET_ROOT,
         train=False,
         download=True,

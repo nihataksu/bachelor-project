@@ -1,7 +1,7 @@
 from .position_embedding_stategy import PositionalEmbeddingStrategy
 import torch
 from torch import nn
-from torchvision.models import resnet101
+from torchvision.models import resnet50
 
 
 class PatchEmbeddingResnetLearnedPositionalEmbedding(PositionalEmbeddingStrategy):
@@ -9,9 +9,9 @@ class PatchEmbeddingResnetLearnedPositionalEmbedding(PositionalEmbeddingStrategy
         self, embed_dim, patch_size, num_patches, dropout, in_channels, image_size
     ):
         super().__init__()
-        self.resnet101 = resnet101(pretrained=True)
-        self.resnet101 = nn.Sequential(
-            *list(self.resnet101.children())[:-2]
+        self.resnet50 = resnet50(pretrained=True)
+        self.resnet50 = nn.Sequential(
+            *list(self.resnet50.children())[:-2]
         )  # Remove the final fully connected layer
 
         # Calculate the feature map size
@@ -26,7 +26,7 @@ class PatchEmbeddingResnetLearnedPositionalEmbedding(PositionalEmbeddingStrategy
 
         self.patcher = nn.Sequential(
             nn.Conv2d(
-                in_channels=2048,  # ResNet-101 output channels before avgpool is 2048
+                in_channels=2048,  # ResNet-50 output channels before avgpool is 2048
                 out_channels=embed_dim,
                 kernel_size=patch_size,
                 stride=patch_size,
@@ -44,9 +44,9 @@ class PatchEmbeddingResnetLearnedPositionalEmbedding(PositionalEmbeddingStrategy
 
     def forward(self, x):
         with torch.no_grad():
-            x = self.resnet101(x)
+            x = self.resnet50(x)
 
-        # print(f"Shape of ResNet-101 output: {x.shape}")
+        # print(f"Shape of ResNet-50 output: {x.shape}")
 
         cls_token = self.cls_token.expand(x.shape[0], -1, -1)
         x = self.patcher(x).permute(0, 2, 1)

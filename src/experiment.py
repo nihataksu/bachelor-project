@@ -11,10 +11,12 @@ from hivit.telegram import notify_telegram_group
 from hivit.telegram import send_photo_telegram_group
 from datetime import datetime
 from hivit.cifar10_dataloader import cifar10_dataloader
+from hivit.cifar10_no_augmnet_dataloader import cifar10_no_augmnet_dataloader
 from hivit.cifar100_dataloader import cifar100_dataloader
 from hivit.food101_dataloader import food101_dataloader
 from hivit.fashion_mnist_dataloader import fashion_mnist_dataloader
 from hivit.mnist_dataloader import mnist_dataloader
+
 import torch
 import os
 import sys
@@ -51,6 +53,13 @@ match parameters.DATASET_NAME:
         # Get the data loaders for train validation and test
         train_dataloader, val_dataloader, test_dataloader = cifar10_dataloader(
             parameters.DATASET_ROOT, parameters.BATCH_SIZE
+        )
+    case "cifar10_no_augment":
+        # Get the data loaders for train validation and test
+        train_dataloader, val_dataloader, test_dataloader = (
+            cifar10_no_augmnet_dataloader(
+                parameters.DATASET_ROOT, parameters.BATCH_SIZE
+            )
         )
     case "cifar100":
         # Get the data loaders for train validation and test
