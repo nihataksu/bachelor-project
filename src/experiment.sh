@@ -19,7 +19,7 @@ else
     # conda env activate
     conda activate bachelor-project && echo "activated conda bachelor-project"
     export WORKING_ROOT="/scratch/$USER/experiment_results"
-    export DATA_ROOT="/scratch/$USER/data"
+    export DATASET_ROOT="/scratch/$USER/data"
 fi 
 
 
