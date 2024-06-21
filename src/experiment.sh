@@ -1,3 +1,28 @@
+#!/bin/bash
+#SBATCH --gres=gpu:1
+#SBATCH --job-name=experiment
+#SBATCH --time=2-00:00
+#SBATCH --mem=32000
+#SBATCH --partition=gpu
+
+if [ -z "$SLURM_JOB_ID" ]
+then
+    echo "not habrok"
+else 
+    echo "habrok"
+    # Purge
+    module purge
+    # Set up Python module
+    module load Python/3.9.6-GCCcore-11.2.0
+    # For Conda Env
+    module load Anaconda3/2023.09-0
+    # conda env activate
+    conda activate bachelor-project && echo "activated conda bachelor-project"
+    export WORKING_ROOT="/scratch/$USER/experiment_results"
+    export DATA_ROOT="/scratch/$USER/data"
+fi 
+
+
 export NO_PLT_SHOW=True
 
 
