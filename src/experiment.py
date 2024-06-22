@@ -14,11 +14,11 @@ from hivit.telegram import notify_telegram_group
 from hivit.telegram import send_photo_telegram_group
 from datetime import datetime
 from hivit.cifar10_dataloader import cifar10_dataloader
-from hivit.cifar10_no_augmnet_dataloader import cifar10_no_augmnet_dataloader
 from hivit.cifar100_dataloader import cifar100_dataloader
 from hivit.food101_dataloader import food101_dataloader
 from hivit.fashion_mnist_dataloader import fashion_mnist_dataloader
 from hivit.mnist_dataloader import mnist_dataloader
+from hivit.get_transformations import get_transforms
 
 import torch
 import os
@@ -46,48 +46,76 @@ parameters = Parameters()
 parameters.load_from_env()
 
 NO_PLT_SHOW = os.getenv("NO_PLT_SHOW") == "True"
-parameters.print()
 
-parameters.save_to_json(os.path.join(working_folder, "parameters.json"))
-
-notify_telegram_group(f"PARAMETERS:\n{parameters.to_json()}")
 
 match parameters.DATASET_NAME:
     case "cifar10":
         # Get the data loaders for train validation and test
+        parameters.IMAGE_SIZE = 32
+        parameters.IN_CHANNELS = 3
+        parameters.NUM_CLASSES = 10
+
         train_dataloader, val_dataloader, test_dataloader = cifar10_dataloader(
-            parameters.DATASET_ROOT, parameters.BATCH_SIZE
-        )
-    case "cifar10_no_augment":
-        # Get the data loaders for train validation and test
-        train_dataloader, val_dataloader, test_dataloader = (
-            cifar10_no_augmnet_dataloader(
-                parameters.DATASET_ROOT, parameters.BATCH_SIZE
-            )
+            DATASET_ROOT=parameters.DATASET_ROOT,
+            BATCH_SIZE=parameters.BATCH_SIZE,
+            training_transformations=get_transforms(parameters),
+            IMAGE_SIZE=parameters.IMAGE_SIZE,
         )
     case "cifar100":
         # Get the data loaders for train validation and test
+        parameters.IMAGE_SIZE = 32
+        parameters.IN_CHANNELS = 3
+        parameters.NUM_CLASSES = 100
+
         train_dataloader, val_dataloader, test_dataloader = cifar100_dataloader(
-            parameters.DATASET_ROOT, parameters.BATCH_SIZE
+            DATASET_ROOT=parameters.DATASET_ROOT,
+            BATCH_SIZE=parameters.BATCH_SIZE,
+            training_transformations=get_transforms(parameters),
+            IMAGE_SIZE=parameters.IMAGE_SIZE,
         )
     case "food101":
         # Get the data loaders for train validation and test
+        parameters.IMAGE_SIZE = 128
+        parameters.IN_CHANNELS = 3
+        parameters.NUM_CLASSES = 101
+
         train_dataloader, val_dataloader, test_dataloader = food101_dataloader(
-            parameters.DATASET_ROOT, parameters.BATCH_SIZE
+            DATASET_ROOT=parameters.DATASET_ROOT,
+            BATCH_SIZE=parameters.BATCH_SIZE,
+            training_transformations=get_transforms(parameters),
+            IMAGE_SIZE=parameters.IMAGE_SIZE,
         )
     case "mnist":
         # Get the data loaders for train validation and test
+        parameters.IMAGE_SIZE = 28
+        parameters.IN_CHANNELS = 1
+        parameters.NUM_CLASSES = 10
+
         train_dataloader, val_dataloader, test_dataloader = mnist_dataloader(
-            parameters.DATASET_ROOT, parameters.BATCH_SIZE
+            DATASET_ROOT=parameters.DATASET_ROOT,
+            BATCH_SIZE=parameters.BATCH_SIZE,
+            training_transformations=get_transforms(parameters),
+            IMAGE_SIZE=parameters.IMAGE_SIZE,
         )
     case "fashion_mnist":
         # Get the data loaders for train validation and test
+        parameters.IMAGE_SIZE = 28
+        parameters.IN_CHANNELS = 1
+        parameters.NUM_CLASSES = 10
+
         train_dataloader, val_dataloader, test_dataloader = fashion_mnist_dataloader(
-            parameters.DATASET_ROOT, parameters.BATCH_SIZE
+            DATASET_ROOT=parameters.DATASET_ROOT,
+            BATCH_SIZE=parameters.BATCH_SIZE,
+            training_transformations=get_transforms(parameters),
+            IMAGE_SIZE=parameters.IMAGE_SIZE,
         )
     case _:
         print("ERROR: DATASET_NAME required")
         sys.exit(-1)
+
+parameters.print()
+parameters.save_to_json(os.path.join(working_folder, "parameters.json"))
+notify_telegram_group(f"PARAMETERS:\n{parameters.to_json()}")
 
 if parameters.EXECUTE_MODEL_LEARNING == "True":
     # Instantiate learned positional emmbedding strategy

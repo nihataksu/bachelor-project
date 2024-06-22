@@ -45,6 +45,17 @@ class Parameters:
         self.MODEL_HILBERT_RESULT_ACCURACY = None
         self.MODEL_NOEMBEDING_RESULT_LOSS = None
         self.MODEL_NOEMBEDING_RESULT_ACCURACY = None
+        self.TRANSFORM_RANDOM_HORIZONTAL_FLIP_ENABLED = "False"
+        self.TRANSFORM_RANDOM_ROTATION_ENABLED = "False"
+        self.TRANSFORM_RANDOM_ROTATION_DEGREE = "0"
+        self.TRANSFORM_RANDOM_CROP_ENABLED = "False"
+        self.TRANSFORM_RANDOM_CROP_PADDING = "4"
+        self.TRANSFORM_COLOR_JITTER_ENABLED = "False"
+        self.TRANSFORM_COLOR_JITTER_BRIGHTNESS = "0.2"
+        self.TRANSFORM_COLOR_JITTER_CONTRAST = "0.2"
+        self.TRANSFORM_COLOR_JITTER_SATURATION = "0.2"
+        self.TRANSFORM_COLOR_JITTER_HUE = "0.2"
+        self.TRANSFORM_RANDOM_ERASING = "False"
 
     def load_from_env(self):
         self.NO_PLT_SHOW = os.getenv("NO_PLT_SHOW", self.NO_PLT_SHOW)
@@ -89,6 +100,72 @@ class Parameters:
         )
         self.DATASET_NAME = os.getenv("DATASET_NAME", self.DATASET_NAME)
         self.DATASET_ROOT = os.getenv("DATASET_ROOT", self.DATASET_ROOT)
+
+        self.TRANSFORM_RANDOM_HORIZONTAL_FLIP_ENABLED = os.getenv(
+            "TRANSFORM_RANDOM_HORIZONTAL_FLIP_ENABLED",
+            self.TRANSFORM_RANDOM_HORIZONTAL_FLIP_ENABLED,
+        )
+        self.TRANSFORM_RANDOM_ROTATION_ENABLED = os.getenv(
+            "TRANSFORM_RANDOM_ROTATION_ENABLED",
+            self.TRANSFORM_RANDOM_ROTATION_ENABLED,
+        )
+
+        self.TRANSFORM_RANDOM_ROTATION_DEGREE = int(
+            os.getenv(
+                "TRANSFORM_RANDOM_ROTATION_DEGREE",
+                self.TRANSFORM_RANDOM_ROTATION_DEGREE,
+            )
+        )
+
+        self.TRANSFORM_RANDOM_CROP_ENABLED = os.getenv(
+            "TRANSFORM_RANDOM_CROP_ENABLED",
+            self.TRANSFORM_RANDOM_CROP_ENABLED,
+        )
+
+        self.TRANSFORM_RANDOM_CROP_PADDING = int(
+            os.getenv(
+                "TRANSFORM_RANDOM_CROP_PADDING",
+                self.TRANSFORM_RANDOM_CROP_PADDING,
+            )
+        )
+
+        self.TRANSFORM_COLOR_JITTER_ENABLED = os.getenv(
+            "TRANSFORM_COLOR_JITTER_ENABLED",
+            self.TRANSFORM_COLOR_JITTER_ENABLED,
+        )
+
+        self.TRANSFORM_COLOR_JITTER_BRIGHTNESS = float(
+            os.getenv(
+                "TRANSFORM_COLOR_JITTER_BRIGHTNESS",
+                self.TRANSFORM_COLOR_JITTER_BRIGHTNESS,
+            )
+        )
+
+        self.TRANSFORM_COLOR_JITTER_CONTRAST = float(
+            os.getenv(
+                "TRANSFORM_COLOR_JITTER_CONTRAST",
+                self.TRANSFORM_COLOR_JITTER_CONTRAST,
+            )
+        )
+
+        self.TRANSFORM_COLOR_JITTER_SATURATION = float(
+            os.getenv(
+                "TRANSFORM_COLOR_JITTER_SATURATION",
+                self.TRANSFORM_COLOR_JITTER_SATURATION,
+            )
+        )
+
+        self.TRANSFORM_COLOR_JITTER_HUE = float(
+            os.getenv(
+                "TRANSFORM_COLOR_JITTER_HUE",
+                self.TRANSFORM_COLOR_JITTER_HUE,
+            )
+        )
+
+        self.TRANSFORM_RANDOM_ERASING = os.getenv(
+            "TRANSFORM_RANDOM_ERASING",
+            self.TRANSFORM_RANDOM_ERASING,
+        )
         self.validate()
 
     def validate(self):

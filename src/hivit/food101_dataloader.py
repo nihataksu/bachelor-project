@@ -1,31 +1,23 @@
 from torchvision import transforms, datasets
-from hivit.cut_out import Cutout
 from torch.utils.data import DataLoader, random_split
 
 
-def food101_dataloader(DATASET_ROOT, BATCH_SIZE):
-    transform_train = transforms.Compose(
+def food101_dataloader(DATASET_ROOT, BATCH_SIZE, training_transformations, IMAGE_SIZE):
+    transformations = []
+    transformations.extend(training_transformations)
+    transformations.extend(
         [
-            transforms.Resize((128, 128)),
-            transforms.RandomHorizontalFlip(),
-            transforms.RandomVerticalFlip(),
-            transforms.RandomRotation(15),
-            transforms.RandomCrop(128, padding=4),
-            transforms.ColorJitter(
-                brightness=0.2, contrast=0.2, saturation=0.2, hue=0.2
-            ),
+            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
             transforms.ToTensor(),
-            Cutout(n_holes=1, length=32),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-            transforms.RandomErasing(
-                p=0.5, scale=(0.02, 0.33), ratio=(0.3, 3.3), value="random"
-            ),
         ]
     )
 
+    transform_train = transforms.Compose(transformations)
+
     transform_val_test = transforms.Compose(
         [
-            transforms.Resize((128, 128)),  # Ensure the image size is 256x256
+            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
