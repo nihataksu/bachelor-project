@@ -1,9 +1,8 @@
 #!/bin/bash
-#SBATCH --gres=gpu:1
 #SBATCH --job-name=experiment
-#SBATCH --time=2-00:00
-#SBATCH --mem=32000
-#SBATCH --partition=gpu
+#SBATCH --time=1-00:00
+#SBATCH --mem=64000
+#SBATCH --partition=regular
 
 if [ -z "$SLURM_JOB_ID" ]
 then

@@ -56,6 +56,7 @@ class Parameters:
         self.TRANSFORM_COLOR_JITTER_SATURATION = "0.2"
         self.TRANSFORM_COLOR_JITTER_HUE = "0.2"
         self.TRANSFORM_RANDOM_ERASING = "False"
+        self.DEVICE = ""
 
     def load_from_env(self):
         self.NO_PLT_SHOW = os.getenv("NO_PLT_SHOW", self.NO_PLT_SHOW)
@@ -166,6 +167,8 @@ class Parameters:
             "TRANSFORM_RANDOM_ERASING",
             self.TRANSFORM_RANDOM_ERASING,
         )
+
+        self.DEVICE = os.getenv("DEVICE", self.DEVICE)
         self.validate()
 
     def validate(self):

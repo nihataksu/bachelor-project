@@ -24,14 +24,16 @@ import torch
 import os
 import sys
 
+device = os.getenv("DEVICE", "")
 
-if torch.backends.mps.is_available():
-    device = "mps"
-elif torch.cuda.is_available():
-    device = "cuda"
-else:
-    print("Metal or CUDA is not found!")
-    sys.exit(1)
+if device == "":
+    if torch.backends.mps.is_available():
+        device = "mps"
+    elif torch.cuda.is_available():
+        device = "cuda"
+    else:
+        print("Metal or CUDA is not found!")
+        sys.exit(1)
 
 print(device)
 
@@ -45,7 +47,7 @@ os.makedirs(working_folder, exist_ok=True)
 # Get the parameters
 parameters = Parameters()
 parameters.load_from_env()
-
+parameters.DEVICE = device
 NO_PLT_SHOW = os.getenv("NO_PLT_SHOW") == "True"
 
 
