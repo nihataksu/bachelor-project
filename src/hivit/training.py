@@ -86,6 +86,9 @@ def training_loop(
     val_losses, val_accuracies = [], []
 
     for epoch in tqdm(range(EPOCHS)):
+
+        epoch_start = timeit.default_timer()
+
         model.train()
         train_labels, train_preds = [], []
         train_running_loss = 0
@@ -166,7 +169,12 @@ def training_loop(
             sum(1 for x, y in zip(val_preds, val_labels) if x == y) / len(val_labels)
         )
 
+        epoch_stop = timeit.default_timer()
+
+        epoch_duration = epoch_stop - epoch_start
+
         logger.print("-" * 30)
+        logger.print(f"Epoch Time: {epoch_duration:.2f}s")
         logger.print(f"Train Loss EPOCH {epoch + 1}: {train_loss:.4f}")
         logger.print(f"Valid Loss EPOCH {epoch + 1}: {val_loss:.4f}")
         logger.print(f"Train Accuracy EPOCH {epoch + 1}: {train_accuracies[-1]:.4f}")
@@ -185,6 +193,7 @@ def training_loop(
         headers = ["Prop", "Value"]
         rows = [
             ["Epoc", f"{epoch + 1}"],
+            ["Epoch Time", f"{epoch_duration:.2f}s"],
             ["Learning Rate", f"{current_lr}"],
             ["Train Loss", f"{train_loss:.4f}"],
             ["Valid Loss", f"{val_loss:.4f}"],

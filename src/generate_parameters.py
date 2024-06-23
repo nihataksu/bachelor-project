@@ -62,15 +62,15 @@ deault_parameters = {
 }
 
 
-experiment_name = "cifar10_patch_size_comparison"
+experiment_name = "cifar10_patch_size_comparison_MODEL_NOEMBEDING"
 output_folder = "data/experiments"
 os.makedirs(output_folder, exist_ok=True)
 
 # Example usage:
 overrides = {
     "DEVICE": ["cpu"],
-    "EXECUTE_MODEL_LEARNING": ["True"],
-    "EXECUTE_MODEL_HILBERT": ["True"],
+    "EXECUTE_MODEL_LEARNING": ["False"],
+    "EXECUTE_MODEL_HILBERT": ["False"],
     "EXECUTE_MODEL_NOEMBEDING": ["True"],
     "DATASET_NAME": ["cifar10"],
     "EPOCHS": ["200"],

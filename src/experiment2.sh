@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=experiment
-#SBATCH --time=1-00:00
+#SBATCH --time=2-00:00
 #SBATCH --mem=64000
 #SBATCH --partition=regular
 
