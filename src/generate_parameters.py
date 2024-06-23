@@ -56,7 +56,7 @@ deault_parameters = {
     "EXECUTE_MODEL_LEARNING": "False",
     "EXECUTE_MODEL_HILBERT": "False",
     "EXECUTE_MODEL_NOEMBEDING": "False",
-    "EXECUTE_MODEL_RESNET_EMBEDING": "True",
+    "EXECUTE_MODEL_RESNET_EMBEDING": "False",
     "TRAINER_BOT_TOKEN": "7453991407:AAHxY8z6n8N4r84e_fYK9XQIhmLfbplNTck",
     "TRAINER_BOT_CHAT_ID": "-4236180801",
 }
@@ -68,6 +68,9 @@ os.makedirs(output_folder, exist_ok=True)
 
 # Example usage:
 overrides = {
+    "EXECUTE_MODEL_LEARNING": ["True"],
+    "EXECUTE_MODEL_HILBERT": ["True"],
+    "EXECUTE_MODEL_NOEMBEDING": ["True"],
     "DATASET_NAME": ["cifar10"],
     "EPOCHS": ["200"],
     "RANDOM_SEEDS": ["32"],

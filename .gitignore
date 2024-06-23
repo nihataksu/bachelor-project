@@ -20,6 +20,7 @@
 *.csv
 
 *.log
+*.out
 
 experiment_results/
 src/data/

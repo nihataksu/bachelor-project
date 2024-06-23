@@ -55,9 +55,15 @@ python generate_parameters.py
 - put the experiment files to queue folder in training folder
 
 
+## Cluster Training
 
-
-
+```bash
+# training folder
+ls /scratch/$USER/training
+mkdir /scratch/$USER/training
+mkdir /scratch/$USER/training/queue
+scp -r /Users/nihat/repos/bachelor-project/src/data/experiments/cifar10_patch_size_comparison s4709039@login1.hb.hpc.rug.nl:/scratch/s4709039/training/queue
+```
 
 
 
