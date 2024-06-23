@@ -57,6 +57,14 @@ class Parameters:
         self.TRANSFORM_COLOR_JITTER_HUE = "0.2"
         self.TRANSFORM_RANDOM_ERASING = "False"
         self.DEVICE = ""
+        self.SLURM_JOB_ID = ""
+        self.SLURM_JOB_NUM_NODES = ""
+        self.SLURM_NTASKS = ""
+        self.SLURM_NTASKS_PER_NODE = ""
+        self.SLURM_TASKS_PER_NODE = ""
+        self.SLURM_CPUS_PER_TASK = ""
+        self.SLURM_JOB_CPUS_ON_NODE = ""
+        self.SLURM_NTASKS_PER_CORE = ""
 
     def load_from_env(self):
         self.NO_PLT_SHOW = os.getenv("NO_PLT_SHOW", self.NO_PLT_SHOW)
@@ -169,6 +177,26 @@ class Parameters:
         )
 
         self.DEVICE = os.getenv("DEVICE", self.DEVICE)
+        self.SLURM_JOB_ID = os.getenv("SLURM_JOB_ID", self.SLURM_JOB_ID)
+        self.SLURM_JOB_NUM_NODES = os.getenv(
+            "SLURM_JOB_NUM_NODES", self.SLURM_JOB_NUM_NODES
+        )
+        self.SLURM_NTASKS = os.getenv("SLURM_NTASKS", self.SLURM_NTASKS)
+        self.SLURM_NTASKS_PER_NODE = os.getenv(
+            "SLURM_NTASKS_PER_NODE", self.SLURM_NTASKS_PER_NODE
+        )
+        self.SLURM_TASKS_PER_NODE = os.getenv(
+            "SLURM_TASKS_PER_NODE", self.SLURM_TASKS_PER_NODE
+        )
+        self.SLURM_CPUS_PER_TASK = os.getenv(
+            "SLURM_CPUS_PER_TASK", self.SLURM_CPUS_PER_TASK
+        )
+        self.SLURM_JOB_CPUS_ON_NODE = os.getenv(
+            "SLURM_JOB_CPUS_ON_NODE", self.SLURM_JOB_CPUS_ON_NODE
+        )
+        self.SLURM_NTASKS_PER_CORE = os.getenv(
+            "SLURM_NTASKS_PER_CORE", self.SLURM_NTASKS_PER_CORE
+        )
         self.validate()
 
     def validate(self):
