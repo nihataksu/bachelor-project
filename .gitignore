@@ -19,8 +19,10 @@
 
 *.csv
 
+*.log
+
 experiment_results/
 src/data/
-
+src/training_queue
 
 

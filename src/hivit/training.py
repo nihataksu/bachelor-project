@@ -193,7 +193,7 @@ def training_loop(
         ]
 
         table = format_table_as_markdown(headers, rows)
-        message = f"Epoc Result:\n\n{table}"
+        message = f"Epoc Result {os.getenv("EXPERIMENT_NAME")}:\n\n{table}"
         telegram_epoc_message_id = update_notify_telegram_group(
             telegram_epoc_message_id, message
         )

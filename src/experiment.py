@@ -37,8 +37,9 @@ print(device)
 
 # Create a working folder based on time
 current_time = datetime.now().strftime("%Y%m%d_%H%M%S")
+experiment_name = os.getenv("EXPERIMENT_NAME", f"experiment_{current_time}")
 working_root = os.getenv("WORKING_ROOT", "experiment_results")
-working_folder = os.path.join(working_root, f"experiment_{current_time}")
+working_folder = os.path.join(working_root, experiment_name)
 os.makedirs(working_folder, exist_ok=True)
 
 # Get the parameters
