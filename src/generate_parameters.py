@@ -62,7 +62,7 @@ deault_parameters = {
 }
 
 
-experiment_name = "cifar10"
+experiment_name = "cifar10_patch_size_comparison"
 output_folder = "data/experiments"
 os.makedirs(output_folder, exist_ok=True)
 
@@ -71,7 +71,7 @@ overrides = {
     "DATASET_NAME": ["cifar10"],
     "EPOCHS": ["200"],
     "RANDOM_SEEDS": ["32"],
-    "PATCH_SIZES": ["4"],
+    "PATCH_SIZES": ["2", "4", "8", "16"],
     "BATCH_SIZES": ["128"],
     "HIDDEN_DIMS": ["768"],
     "NUM_ENCODERSS": ["8", "6"],

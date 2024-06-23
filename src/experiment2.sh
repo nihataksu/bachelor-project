@@ -7,7 +7,7 @@
 
 if [ -z "$SLURM_JOB_ID" ]
 then
-    export TRAINING_QUEUE_ROOT="training_queue"
+    export TRAINING_QUEUE_ROOT="training"
     export WORKING_ROOT="training_queue/results"
     echo "not habrok"
 else 
@@ -22,7 +22,7 @@ else
     conda activate bachelor-project && echo "activated conda bachelor-project"
     export WORKING_ROOT="/scratch/$USER/experiment_results"
     export DATASET_ROOT="/scratch/$USER/data"
-    export TRAINING_QUEUE_ROOT="/scratch/$USER/training_queue"
+    export TRAINING_QUEUE_ROOT="/scratch/$USER/training"
 fi 
 
 
