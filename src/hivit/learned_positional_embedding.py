@@ -19,6 +19,7 @@ class PatchEmbeddingLearnedPositionalEmbedding(PositionalEmbeddingStrategy):
         self.cls_token = nn.Parameter(
             torch.randn(size=(1, embed_dim)), requires_grad=True
         )
+        # print(f"num_patches: {num_patches}")
         self.position_embeddings = nn.Parameter(
             torch.randn(size=(1, num_patches + 1, embed_dim)), requires_grad=True
         )

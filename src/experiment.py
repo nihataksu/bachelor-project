@@ -20,6 +20,8 @@ from hivit.fashion_mnist_dataloader import fashion_mnist_dataloader
 from hivit.mnist_dataloader import mnist_dataloader
 from hivit.get_transformations import get_transforms
 
+# from hivit.visualize_data import visualize_data
+
 import torch
 import os
 import sys
@@ -88,9 +90,11 @@ match parameters.DATASET_NAME:
             training_transformations=get_transforms(parameters),
             IMAGE_SIZE=parameters.IMAGE_SIZE,
         )
+        # visualize_data(train_dataloader, val_dataloader, test_dataloader)
+
     case "mnist":
         # Get the data loaders for train validation and test
-        parameters.IMAGE_SIZE = 28
+        parameters.IMAGE_SIZE = 32
         parameters.IN_CHANNELS = 1
         parameters.NUM_CLASSES = 10
 
@@ -100,9 +104,12 @@ match parameters.DATASET_NAME:
             training_transformations=get_transforms(parameters),
             IMAGE_SIZE=parameters.IMAGE_SIZE,
         )
+
+        # visualize_data(train_dataloader, val_dataloader, test_dataloader)
+
     case "fashion_mnist":
         # Get the data loaders for train validation and test
-        parameters.IMAGE_SIZE = 28
+        parameters.IMAGE_SIZE = 32
         parameters.IN_CHANNELS = 1
         parameters.NUM_CLASSES = 10
 
@@ -116,6 +123,7 @@ match parameters.DATASET_NAME:
         print("ERROR: DATASET_NAME required")
         sys.exit(-1)
 
+parameters.validate()
 parameters.print()
 parameters.save_to_json(os.path.join(working_folder, "parameters.json"))
 notify_telegram_group(f"PARAMETERS:\n{parameters.to_json()}")
@@ -123,6 +131,7 @@ notify_telegram_group(f"PARAMETERS:\n{parameters.to_json()}")
 if parameters.EXECUTE_MODEL_LEARNING == "True":
     # Instantiate learned positional emmbedding strategy
     print("Instantiate learned positional emmbedding strategy")
+    # print(f"Num patches experiment {parameters.NUM_PATCHES}")
     learned_postional_embedding = PatchEmbeddingLearnedPositionalEmbedding(
         parameters.EMBEDING_DIMENTION,
         parameters.PATCH_SIZE,

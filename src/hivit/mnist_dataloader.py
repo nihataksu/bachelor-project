@@ -4,11 +4,13 @@ from torch.utils.data import DataLoader, random_split
 
 def mnist_dataloader(DATASET_ROOT, BATCH_SIZE, training_transformations, IMAGE_SIZE):
 
+    padding = (IMAGE_SIZE - 28) // 2
+
     transformations = []
     transformations.extend(training_transformations)
     transformations.extend(
         [
-            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+            transforms.Pad(padding),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.1307], std=[0.3081]),
         ]
@@ -18,7 +20,7 @@ def mnist_dataloader(DATASET_ROOT, BATCH_SIZE, training_transformations, IMAGE_S
 
     transform_val_test = transforms.Compose(
         [
-            transforms.Resize((IMAGE_SIZE, IMAGE_SIZE)),
+            transforms.Pad(padding),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.1307], std=[0.3081]),
         ]
