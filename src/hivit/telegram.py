@@ -27,12 +27,12 @@ def update_notify_telegram_group(message_id, message) -> int:
             return telegram_send_message(bot_token, chat_id, message)
         except Exception as e:
             print(f"An error occurred: {e}")
-            return message_id
+            return 0
     try:
         return telegram_update_message(bot_token, chat_id, message_id, message)
     except Exception as e:
         print(f"An error occurred: {e}")
-        return message_id
+        return 0
 
 
 def send_photo_telegram_group(image_path, caption):
