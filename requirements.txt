@@ -8,3 +8,5 @@ torchvision
 scikit-learn
 tqdm
 hilbertcurve
+scipy 
+statsmodels
