@@ -10,3 +10,4 @@ tqdm
 hilbertcurve
 scipy 
 statsmodels
+seaborn
